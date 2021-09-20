@@ -1,202 +1,409 @@
-/*#include <iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<iostream>
+#include"queue.h"
+#include<stdlib.h>
 using namespace std;
-class element
+struct node *root=NULL;
+void tcreate()
 {
-    public:
-    int i;
-    int j;
-    int x;
-};
-class sparse
-{
-    private:
-    int m;
-    int n;
-    struct element *e;
-    void read()
+    struct queue q;
+    int x,y,z;
+    struct node *t,*p;
+    create(&q,160);
+    cout<<"Enter the root: ";
+    cin>>x;
+    root=new node;
+    root->data=x;
+    root->rchild=NULL;
+    root->lchild=NULL;
+    enqueue(&q,root);
+    while(!isempty(q))
     {
-
+      p=dequeue(&q);
+      cout<<"Enter the left child "<<p->data<<" is: ";
+      cin>>y;
+      if(y!=-1)
+      {
+          t=new node;
+          t->data=y;
+          t->lchild=NULL;
+          t->rchild=NULL;
+          p->lchild=t;
+          enqueue(&q,t);
+      }
+      cout<<"Enter the right child "<<p->data<<" is: ";
+      cin>>z;
+      if(z!=-1)
+      {
+          t=new node;
+          t->data=z;
+          t->lchild=NULL;
+          t->rchild=NULL;
+          p->rchild=t;
+          enqueue(&q,t);
+      }
     }
 }
-int main()
+void preorder(struct node *p)
 {
-    cout<<"Hello World";
-
+    if(p)
+    {
+    cout<<p->data;
+    preorder(p->lchild);
+    preorder(p->rchild);
+    }
+}
+void inorder(struct node *p)
+{
+    if(p)
+    {
+    inorder(p->lchild);
+    cout<<p->data;
+    inorder(p->rchild);
+    }
+}
+void postorder(struct node *p)
+{
+    if(p)
+    {
+        postorder(p->lchild);
+        postorder(p->rchild);
+        cout<<p->data;
+    }
+}
+int countall(struct node *p)
+{
+    int x,y;
+    if(p!=NULL)
+    {
+        x=countall(p->lchild);
+        y=countall(p->rchild);
+        return x+y+1;
+    }
     return 0;
 }
-*//*Sparse Matrix using C++
-#include <iostream>
-using namespace std;
-class Element
+int count2(struct node *p)
 {
-public:
-int i;
-int j;
-int x;
-};
-class Sparse
-{
-private:
-int m;
-int n;
-int num;
-Element *ele;
-public:
-Sparse(int m,int n,int num)
-{
-this->m=m;
-this->n=n;
-this->num=num;
-ele=new Element[this->num];
+    int x,y;
+    if(p!=NULL)
+    {
+        x=count2(p->lchild);
+        y=count2(p->rchild);
+        if(p->lchild!=NULL||p->rchild!=NULL)
+        return x+y+1;
+        else
+        return x+y;
+    }
+    return 0;
 }
-~Sparse()
+int add(struct node *p)
 {
-delete [] ele;
+    int x,y;
+    if(p!=NULL)
+    {
+        x=add(p->lchild);
+        y=add(p->rchild);
+        return x+y+p->data;
+    }
+    return 0;
 }
-Sparse operator+(Sparse &s);
-friend istream & operator>>(istream &is,Sparse &s);
-friend ostream & operator<<(ostream &os,Sparse &s);
-};
-Sparse Sparse::operator+(Sparse &s)
+int height(struct node *p)
 {
-int i,j,k;
-if(m!=s.m || n!=s.n)
-return Sparse(0,0,0);
-Sparse *sum=new Sparse(m,n,num+s.num);
-i=j=k=0;
-while(i<num && j<s.num)
+    int x,y;
+    if(p!=NULL)
+    {
+        x=height(p->lchild);
+        y=height(p->rchild);
+        if(x>y)
+        return x+1;
+        else
+        return y+1;
+    }
+    return 0;
+}
+int counter(struct node *p)
 {
-if(ele[i].i<s.ele[j].i)
-sum->ele[k++]=ele[i++];
-else if(ele[i].i > s.ele[j].i)
-sum->ele[k++]=s.ele[j++];
-else if(ele[i].j<s.ele[j].j)
-sum->ele[k++]=ele[i++];
-else if(ele[i].j > s.ele[j].j)
-sum->ele[k++]=s.ele[j++];
-else
+    int x,y;
+    if(p!=NULL)
+    {
+        x=counter(p->lchild);
+        y=counter(p->rchild);
+        if(p->lchild!=NULL&&p->rchild!=NULL)
+        return x+y+1;
+        else
+        return x+y;
+    }
+    return 0;
+}
+int count1(struct node *p)
 {
-sum->ele[k]=ele[i];
-sum->ele[k++].x=ele[i++].x+s.ele[j++].x;
+    int x,y;
+    if(p!=NULL)
+    {
+        x=count1(p->lchild);
+        y=count2(p->rchild);
+        if(((p->lchild!=NULL)&&(p->rchild==NULL))^((p->lchild==NULL)&&(p->rchild!=NULL)))
+        return x+y+1;
+        else
+        return x+y;
+    }
+    return 0;
 }
-}
-for(;i<num;i++)
-sum->ele[k++]=ele[i];
-for(;j<s.num;j++)
-sum->ele[k++]=s.ele[j];
-sum->num=k;
-return *sum;
-}
-istream & operator>>(istream &is,Sparse &s)
+struct node *searching(struct node *p,int key)
 {
-cout<<"Enter non-zero elements";
-for(int i=0;i<s.num;i++)
-cin>>s.ele[i].i>>s.ele[i].j>>s.ele[i].x;
-return is;
+    while(p!=NULL)
+    {
+    if(p->data==key)
+    return p;
+    if(p->data<key)
+    p=p->lchild;
+    else
+    if(p->data>key)
+    p=p->rchild;
+    }
+    return NULL;
 }
-ostream & operator<<(ostream &os,Sparse &s)
+struct node *Inserti(struct node *p,int key)
 {
-int k=0;
-for(int i=0;i<s.m;i++)
+    struct node *r,*t;
+    while(p!=NULL)
+    {
+      r=p;
+      if(key==p->data)
+      return NULL;
+      if(key>p->data)
+      p=p->lchild;
+      else
+      p=p->rchild;
+    }
+    t=new node;
+    p->data=t->data;
+    if(p->data<r->data)
+    r->rchild=p;
+    else
+    r->lchild=p;
+    return p;
+}
+
+/*
+struct node *Rinsert(struct node *p,int key)
 {
-for(int j=0;j<s.n;j++)
+ struct node *t;
+ if(p==NULL)
+ {
+    t=new node;
+    t->data=key;
+    t->lchild=t->rchild=NULL;
+ }
+ if(key<p->data)
+ p->rchild=Rinsert(p->rchild,key);
+ else
+ if(key>p->data)
+ p->lchild=Rinsert(p->lchild,key);
+ return p;
+}
+*/
+struct node *Inpre(struct node *p)
 {
-if(s.ele[k].i==i && s.ele[k].j==j)
-cout<<s.ele[k++].x<<" ";
-else
-cout<<"0 ";
+    while(p!=NULL&&p->lchild!=NULL)
+    {
+       p=p->lchild;
+    }
+    return p;
 }
-cout<<endl;
+struct node *Insucc(struct node *p)
+{
+    while(p!=NULL&&p->rchild!=NULL)
+    {
+        p=p->rchild;
+    }
+    return p;
 }
-return os;
+struct node *deletes(struct node *p,int key)
+{
+  struct node *q;
+  if(p==NULL)
+  return NULL;
+  if(p->lchild!=NULL&&p->rchild!=NULL)
+  {
+      if(p==root)
+      {
+          root=NULL;
+          delete(p);
+          return NULL;
+      }
+  if(key>p->data)
+  {
+      p->lchild=deletes(p->lchild,key);
+  }
+  else
+    if(key<p->data)
+    {
+      p->rchild=deletes(p->rchild,key);
+    }
+  }
+    else
+    {
+    if(height(p->lchild)>height(p->rchild))
+    {
+        q=Inpre(p->lchild);
+        p->data=q->data;
+        p->lchild=deletes(p->lchild,q->data);
+    }
+    else
+    if(height(p->lchild)<height(p->rchild))
+    {
+        q=Insucc(p->rchild);
+        p->data=q->data;
+        p->rchild=deletes(p->rchild,q->data);
+    }
 }
+  return p;
+  }
+
 int main()
 {
-Sparse s1(5,5,1);
-Sparse s2(5,5,1);
-cin>>s1;
-cin>>s2;
-Sparse sum=s1+s2;
-cout<<"First Matrix"<<endl<<s1;
-cout<<"Second MAtrix"<<endl<<s2;
-cout<<"Sum Matrix"<<endl<<sum;
-return 0;
+      /*tcreate();
+      cout<<"preorder:";
+      preorder(root);
+      cout<<"\ninorder:";
+      inorder(root);
+      cout<<"\npostorder:";
+      postorder(root);
+      cout<<"\ncount all:"<<countall(root);
+      cout<<"\nadd two elements:"<<add(root);
+      cout<<"\ncount 2 nodes:"<<count2(root);
+      cout<<"\nheight is:"<<height(root);
+      cout<<"\n leaf node"<<counter(root);
+      cout<<"\nCounting one degree node"<<count1(root);*/
+      struct node *root=Inserti(root,30);
+      Inserti(root,35);
+      Inserti(root,10);
+      Inserti(root,20);
+      Inserti(root,25);
+      Inserti(root,45);
+      deletes(root,20);
+      inorder(root);
+      cout<<"\nheight is:"<<height(root);
+      return 0;
+}
+
+/*struct node *search(struct node *p,int key)
+{
+    while(p!=NULL)
+    {
+    if(p->data==key)
+    return p;
+    if(p->data<key)
+    p=p->lchild;
+    else
+    if(p->data>key)
+    p=p->rchild;
+    }
+    return NULL;
+}
+void inserti(struct node *p,int key)
+{
+    struct node *r;
+    while(p!=NULL)
+    {
+      r=t;
+      if(key==p->data)
+       return NULL;
+        if(key>p->data)
+        p=p->lchild;
+      else
+        p=p->rchild;
+    }
+    t=new node;
+    p->data=t->data;
+    if(p->data<r->data)
+    r->rchild=p;
+    else
+    r->lchild=p;
+}
+struct node *Rinsert(struct node *p,int key)
+{
+ struct node *t;
+ if(p==NULL)
+ {
+    t=new node;
+    t->data=key;
+    t->lchild=t->rchild=NULL;
+ }
+ if(key<p->data)
+ p->rchild=Rinsert(p->rchild,key);
+ else
+ if(key>p->data)
+ p->lchild=Rinsert(p->lchild,key);
+ return p;
+}
+struct node *Inpre(struct node *p)
+{
+    while(p!=NULL&&p->lchild!=NULL)
+    {
+       p=p->lchild
+    }
+    return p;
+}
+struct node *Insucc(struct node *p)
+{
+    while(p!=NULL&&p->rchild!=NULL)
+    {
+        p=p->rchild;
+    }
+    return p;
+}
+struct node *delete(struct node *p,int key)
+{
+    struct node *q;
+  if(p==NULL)
+  return NULL;
+  if(p->lchild!=NULL&&p->rchild!=NULL)
+  {
+      if(p==root)
+      {
+          root=NULL;
+          delete(p);
+          return NULL;
+      }
+  if(key>p->data)
+  {
+      p->lchild=delete(p->lchild,key);
+  }
+  else
+    if(key<p->data)
+    {
+      p->rchild=delete(p->rchild,key);
+    }
+    else
+    {
+        if(height(p->lchild)>height(p->rchild))
+    {
+        q=inpre(p->lchild);
+        p->data=q->data;
+        p->lchild=delete(p->lchild,q->data);
+    }
+    else
+    if(height(p->lchild)<height(p->rchild))
+    {
+        q=insucc(p->rchild);
+        p->data=q->data;
+        p->rchild=delete(p->rchild,q->data);
+    }
+}
+  return p;
+  }
+int main()
+{
+    struct *root=Inserti(root,30);
+    inserti(root,35);
+    inserti(root,10);
+    inserti(root,20);
+    inserti(root,25);
+    inserti(root,45);
+    deletes(root,20);
+    cout<<inorder(root);
+    getch();
 }*/
-/*#include<iostream>
-#include<math.h>
-using namespace std;
-struct term
-{
-    int Exp;
-    int coeff;
-};
-struct poly
-{
-    int n;
-    struct term *t;
-};
-int main()
-{
-struct poly p;
-cout<<"ENTER THE NON ZERO TERM : ";
-cin>>p.n;
-p.t=new term[p.n];
-for(int i=0;i<p.n;i++)
-{
- cout<<"enter the data "<<i+1;
- cout<<"\nEnter the coefficient";
- cin>>p.t[i].coeff;
- cout<<"\n";
- cout<<"Enter the exponent";
- cin>>p.t[i].Exp;
- cout<<"\n";
-}
-int x;
-char sum=*int;
-for(int i=0;i<p.n;i++)
-{
- sum=sum+(p.t[i].coeff)*pow(x,p.t[i].Exp);
-}
-cout<<"sum of a polynomial: "<<sum;
-return 0;
-}*/
-#include<iostream>
-#include<math.h>
-using namespace std;
-struct term
-{
-    int Exp;
-    int coeff;
-};
-struct poly
-{
-    int n;
-    struct term *t;
-};
-int main()
-{
-struct poly p;
-cout<<"ENTER THE NON ZERO TERM : ";
-cin>>p.n;
-p.t=new term[p.n];
-for(int i=0;i<p.n;i++)
-{
- cout<<"enter the data "<<i+1;
- cout<<"\nEnter the coefficient";
- cin>>p.t[i].coeff;
- cout<<"\n";
- cout<<"Enter the exponent";
- cin>>p.t[i].Exp;
- cout<<"\n";
-}
- char x;
-for(int i=0;i<p.n;i++)
-{
- int k=0;
- cout<<p.t[i]<<"x"<<coeff*pow(x,p.t[i].Exp);
- ++k;
- if(k<p.n)
- cout<<"+";
-}
-return 0;
-}
