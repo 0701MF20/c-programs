@@ -2,8 +2,11 @@
 #include<stdio.h>
 int main()
 {
-    int i,index,item,noe=6;
-    int A[7];
+    int i,item,noe=5;
+    int A[6],x;
+    printf("Enter the element in sorted format :");
+    printf("\nEnter 1 for ascending or 2 for descending :");
+    scanf("%d",&x);
     printf("Entered the element in array:-\n");
     for(i=0;i<noe;i++)
     {
@@ -12,19 +15,39 @@ int main()
     }
     printf("Enter the element to be inserted in array :");
     scanf("%d",&item);
-    printf("Enter the index at which element is added in the array :");
-    scanf("%d",&index);
-    for(i=noe-1;i>=index;i--)
+    if(x==1)
     {
-        A[i+1]=A[i];
+      for(i=noe-1;i>=0;i--)
+      {
+        if(A[i]>item)
+            A[i+1]=A[i];
+        else
+        {
+            A[i+1]=item;
+            break;
+        }
+      }
     }
-    A[index]=item;
-    printf("Display of array after inserting the element in the given index :");
-    for(i=0;i<7;i++)
+     else if(x==2)
+    {
+     for(i=noe-1;i>=0;i--)
+     {
+        if(A[i]<item)
+        A[i+1]=A[i];
+        else
+        {
+          A[i+1]=item;
+          break;
+        }
+     }
+    }
+    printf("Display of array: ");
+    for(i=0;i<6;i++)
     {
         printf("%d",A[i]);
-        if(i==0||i<6)
+        if(i==0||i<5)
         printf(",");
     }
     getch();
 }
+
