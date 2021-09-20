@@ -1,105 +1,90 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<malloc.h>
-#include<conio.h>
-struct node
+/*#include<stdio.h>
+int factorial(int n)
 {
-int info;
-struct node* link;
-}*start=NULL;
-void create()
-{
-struct node *new1,*ptr;
-new1=(struct node *)malloc(sizeof(struct node));
-printf("\nEnter the element: ");
-scanf("%d",&new1->info);
-new1->link=NULL;
-if(start==NULL)
-{
- start=new1;
-}
-else
-{
-ptr=start;
-while(ptr->link!=NULL)
-{
-ptr=ptr->link;
-}
-ptr->link=new1;
-}
-}
-void display()
-{
-int i=0;
-struct node* ptr;
-if(start==NULL)
-{
- printf("\nLinked List is empty\n");
- exit(0);
-}
-else
-{
- ptr=start;
- printf("\nThe List elements are: ");
- while(ptr!=NULL)
- {
-  if(i==1)
-  printf("->");
-  printf("%d",ptr->info);
-  ptr=ptr->link;
-  i=1;
-  }
- }
+    int i;
+    int fact=1;
+    for(i=2;i<=n;i++)
+    {
+        fact=fact*i;
+    }
+    return fact;
 }
 int main()
 {
-int choice,ch;
-while(1)
+    int n;
+    printf("Enter the value of n :");
+    scanf("%d",&n);
+    printf("Factorial of n :%d",factorial(n));
+    getch();
+}
+*/
+/*
+#include<stdio.h>
+int factorial(int n)
 {
-system("cls");
-printf("\nMENU \n");
-printf("1.Create\n");
-printf("2.Display\n");
-printf("3.Press any key other than 1,2,3");
-printf("\n----------------------------------\n");
-printf("Enter your choice: ");
-scanf("%d",&choice);
-printf("\n----------------------------------\n");
-switch(choice)
+    if(n==1)
+    return 1;
+    else
+    {
+    if(n>1)
+    {
+        return factorial(n-1)*n;
+    }
+    }
+}
+int main()
 {
-case 1:
-do{
-create();
-printf("\nDo you want to enter more nodes then press 1 otherwise press any key:");
-scanf("%d",&ch);
-}while(ch==1);
-printf("\n-------------------------------------------------------\n");
-printf("\nEnter any key for execution of any other operation.");
-break;
-case 2:
-display();
-printf("\n-------------------------------------------------------\n");
-printf("\nEnter any key for execution of any other operation.");
-break;
-default:
-printf("\n Wrong choice:\n");
-exit(0);
+    int n;
+    printf("Enter the value of n :");
+    scanf("%d",&n);
+    printf("Factorial of n is :%d",factorial(n));
+    getch();
 }
-getch();
+*/
+/*
+#include<stdio.h>
+int fib(int n)
+{
+    if(n==1||n==0)
+    return n;
+    else
+    {
+        return fib(n-1)+fib(n-2);
+    }
+
 }
-return 0;
+int main()
+{
+  int n;
+  printf("Enter the value of n :");
+  scanf("%d",&n);
+  for(int i=0;i<n;i++)
+  {
+  printf("%d",fib(i));
+  if(i<(n-1))
+  {
+      printf(",");
+  }
+  }
+  getch();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/
+/*#include<stdio.h>
+int main()
+{
+    int *c,*d,a,b,temp;
+    printf("Enter the value of a:");
+    scanf("%d",&a);
+    printf("Enter the value of b:");
+    scanf("%d",&b);
+    c=&a;
+    d=&b;
+    temp=*c;
+    *c=*d;
+    *d=temp;
+    printf("Value a and b obtained after swapping:-");
+    printf("\nValue of a :%d",a);
+    printf("\nValue of b :%d",b);
+    getch();
+}
+*/
