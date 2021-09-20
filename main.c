@@ -1,22 +1,27 @@
-//28. WAP to swap two numbers using pointers.
-#include<stdio.h>
+#include <stdlib.h>
+#include <stdio.h>
 int main()
 {
-    int *c,*d,a,b,temp;
-    printf("Enter the value of a:");
-    scanf("%d",&a);
-    printf("Enter the value of b:");
-    scanf("%d",&b);
-    printf("Value of a and b obtained before swapping:-\n");
-    printf("Value of a :%d",a);
-    printf("\nValue of b :%d",b);
-    c=&a;
-    d=&b;
-    temp=*c;
-    *c=*d;
-    *d=temp;
-    printf("\nValue a and b obtained after swapping:-");
-    printf("\nValue of a :%d",a);
-    printf("\nValue of b :%d",b);
-    getch();
+    int A[7];
+    int x,i,y=-1,noe=6;
+    printf("Enter the elements in the array:-\n");
+    for(i=0;i<noe;i++)
+    {
+        printf("Element entered at the index %d is ",i);
+        scanf("%d",&A[i]);
+    }
+    printf("Element to search in array:");
+    scanf("%d",&x);
+    for(i=0;i<noe;i++)
+    {
+        if(A[i]==x)
+        {
+          y=1;
+          printf("Element is found in the array at index is %d",i);
+          break;
+        }
+    }
+    if(y==-1)
+    printf("Element is not found in the given array");
+    getch();      //    I have used getch so that i can hold the screen for obtaining result
 }
