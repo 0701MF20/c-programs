@@ -1,14 +1,16 @@
-//25. WAP to compute factorial of numbers using function.
+//26. WAP to compute factorial of number using recursion.
 #include<stdio.h>
 int factorial(int n)
 {
-    int i;
-    int fact=1;
-    for(i=2;i<=n;i++)
+    if(n==1)
+    return 1;
+    else
     {
-        fact=fact*i;
+    if(n>1)
+    {
+        return factorial(n-1)*n;
     }
-    return fact;
+    }
 }
 int main()
 {
@@ -16,7 +18,6 @@ int main()
     printf("Enter the data:-\n");
     printf("Enter the value of n :");
     scanf("%d",&n);
-    printf("Factorial of %d :%d",n,factorial(n));
+    printf("Factorial of %d is :%d",n,factorial(n));
     getch();
 }
-
