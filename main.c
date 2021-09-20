@@ -1,23 +1,28 @@
-//26. WAP to compute factorial of number using recursion.
+//27. WAP to print Fibonacci series using recursive function.
 #include<stdio.h>
-int factorial(int n)
+int fib(int n)
 {
-    if(n==1)
-    return 1;
+    if(n==1||n==0)
+    return n;
     else
     {
-    if(n>1)
-    {
-        return factorial(n-1)*n;
+        return fib(n-1)+fib(n-2);
     }
-    }
+
 }
 int main()
 {
-    int n;
-    printf("Enter the data:-\n");
-    printf("Enter the value of n :");
-    scanf("%d",&n);
-    printf("Factorial of %d is :%d",n,factorial(n));
-    getch();
+  int n;
+  printf("Enter the value of n :");
+  scanf("%d",&n);
+  printf("Fibonaci series obtained are:-\n");
+  for(int i=0;i<n;i++)
+  {
+  printf("%d",fib(i));
+  if(i<(n-1))
+  {
+      printf(",");
+  }
+  }
+  getch();
 }
