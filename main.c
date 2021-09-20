@@ -1,28 +1,22 @@
-//27. WAP to print Fibonacci series using recursive function.
+//28. WAP to swap two numbers using pointers.
 #include<stdio.h>
-int fib(int n)
-{
-    if(n==1||n==0)
-    return n;
-    else
-    {
-        return fib(n-1)+fib(n-2);
-    }
-
-}
 int main()
 {
-  int n;
-  printf("Enter the value of n :");
-  scanf("%d",&n);
-  printf("Fibonaci series obtained are:-\n");
-  for(int i=0;i<n;i++)
-  {
-  printf("%d",fib(i));
-  if(i<(n-1))
-  {
-      printf(",");
-  }
-  }
-  getch();
+    int *c,*d,a,b,temp;
+    printf("Enter the value of a:");
+    scanf("%d",&a);
+    printf("Enter the value of b:");
+    scanf("%d",&b);
+    printf("Value of a and b obtained before swapping:-\n");
+    printf("Value of a :%d",a);
+    printf("\nValue of b :%d",b);
+    c=&a;
+    d=&b;
+    temp=*c;
+    *c=*d;
+    *d=temp;
+    printf("\nValue a and b obtained after swapping:-");
+    printf("\nValue of a :%d",a);
+    printf("\nValue of b :%d",b);
+    getch();
 }
