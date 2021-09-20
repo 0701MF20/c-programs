@@ -1,30 +1,41 @@
-#include<stdlib.h>
 #include<stdio.h>
 int main()
 {
-   int i,j,item,noe=5,index,y=-1;
-    int A[6];
-    printf("Entered the element in array:-\n");
-    for(i=0;i<noe;i++)
+    int A[5][3],i,j,B[3][5];
+    printf("Enter the data of 2D Matrix:-\n");
+    for(i=0;i<5;i++)
     {
-        printf("Element entered at the index %d is ",i);
-        scanf("%d",&A[i]);
-    }
-    for(i=0;i<noe-1;i++)
-    {
-      for(j=1+i;j<noe;j++)
-      {
-        if(A[i]==A[j])
+        for(j=0;j<3;j++)
         {
-            y=1;
-            printf("Duplicate element in the array is %d\n",A[i]);
-            break;
+            scanf("%d",&A[i][j]);
         }
-      }
     }
-    if(y==-1)
+   printf("Display the Matrix:-\n");
+    for(i=0;i<5;i++)
     {
-      printf("No duplicate element is present in sorted array");
+        for(j=0;j<3;j++)
+        {
+            printf("%d",A[i][j]);
+            printf(" ");
+        }
+        printf("\n");
     }
-    getch();
+for(i=0;i<5;i++)
+{
+    for(j=0;j<3;j++)
+    {
+        B[j][i]=A[i][j];
+    }
+}
+printf("Display of Transpose matrix:-\n");
+for(j=0;j<3;j++)
+{
+    for(i=0;i<5;i++)
+    {
+        printf("%d",B[j][i]);
+        printf(" ");
+    }
+    printf("\n");
+}
+getch();
 }
