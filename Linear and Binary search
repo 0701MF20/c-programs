@@ -1,0 +1,75 @@
+#include<stdio.h>
+#include<time.h>
+#include<unistd.h>
+int linear(int A[],int n,int data)
+{
+	int i;
+ for(i=0;i<n;i++)
+ {
+  if(A[i]==data)
+  return i;
+ }
+ return -1;
+}
+int binary(int A[],int l,int data,int h)
+{
+	int i,j,mid;
+	i=l,j=h;
+	if(i==j)
+	{
+		if(A[i]==data)
+		return i;
+	}
+	else
+	{
+		mid=(l+h)/2;
+		if(A[mid]==data)
+		{
+			return mid;
+		}
+		else
+		{
+			if(data<A[mid])
+		return binary(A,l,data,mid);
+			else
+			return binary(A,mid+1,data,h);
+		}
+	}
+}
+int main()
+{
+int n;
+ int A[50],i,data,choice,index;
+ float EST;
+ time_t START,END;
+  printf("\nMenu:-\n 1.Linear Search \n 2.Binary Search(Insert the array in sorted array)\n");
+ scanf("%d",&choice);
+ printf("\nEnter number of elements in array: ");
+ scanf("%d",&n);
+ printf("\nEnter Elements in array:- \n");
+ for(i=0;i<n;i++)
+ scanf("%d",&A[i]);
+ printf("Enter element to be searched: ");
+ scanf("%d",&data);
+ switch(choice)
+{
+case 1:
+	time(&START);
+ index=linear(A,n,data);
+ time(&END);
+ EST=(float)(END-START);
+ break;
+ case 2:
+ 	index=binary(A,0,data,(n-1));
+ 	EST=(float)(END-START);
+ 	break;
+ 	default:
+ 		printf("\n Invalid Choice\n");
+}
+ if(index==-1)
+ printf("\n Element not found :\n");
+ else
+ printf("\n Element Found at  index %d and its position is: %d",index,index+1);
+  printf("\n Estimated time: %f",EST);
+ return 0;
+}
